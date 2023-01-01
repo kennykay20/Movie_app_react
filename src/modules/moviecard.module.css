@@ -1,0 +1,108 @@
+/* Remove extra left and right margins due to padding in columns*/
+.row {
+  margin: 0;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+}
+
+/* Float four columns side by side*/
+.movieCardColumn {
+  float: left;
+  width: 24%;
+  margin: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+}
+
+.moviePoster {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  transition: height 0.3s ease;
+  cursor: pointer;
+}
+
+.movieImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease; /* smooth transition for the image filter*/
+}
+
+.movieOverlay {
+  position: absolute;
+  top: 10px; /* Adjust the distance from the top */
+  right: 10px; /* Adjust the distance from the right */
+  display: none; /* Initially hidden */
+}
+
+.favoriteBtn {
+  cursor: pointer;
+  border-radius: 50px;
+  border: 1px solid grey;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.favouriteBtnActive {
+  color: red;
+  content: "❤️";
+  cursor: pointer;
+  background-color: #000;
+  border-radius: 50px;
+  border: 1px solid red;
+}
+.movieInfo {
+  background-color: #cccccc;
+  height: 90px;
+  padding: 10px;
+}
+
+/* Hover effect on moviePoster */
+.moviePoster:hover {
+  background-color: black;
+}
+.moviePoster:hover .movieImage {
+  filter: brightness(0.4);
+}
+.moviePoster:hover .movieOverlay {
+  display: block;
+}
+.moviePoster:hover .favoriteBtn {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Darker background for the button on the hover */
+}
+.favoriteBtn:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive layout - when the screen is less than 600px wide, 
+make the two columns stack on top of each other instead of next to each other*/
+
+@media screen and (max-width: 1024px) {
+  .movieCardColumn {
+    width: 32%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .movieCardColumn {
+    width: 47%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .movieCardColumn {
+    width: 100%;
+  }
+}

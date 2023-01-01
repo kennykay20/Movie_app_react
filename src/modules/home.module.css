@@ -1,0 +1,25 @@
+.searchForm {
+  margin: 20px auto;
+  width: 300px;
+  position: relative;
+}
+
+.searchInput {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px 20px;
+  outline: none;
+  margin-right: 10px;
+}
+
+.searchButton {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  padding: 11px 20px;
+}
+.errorMessage {
+  color: red;
+}

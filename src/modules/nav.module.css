@@ -1,0 +1,35 @@
+.navbar {
+  background-color: black;
+  font-size: 2em;
+  height: 40px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  /* color: #393e45; */
+  color: blueviolet;
+  padding: 30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navbarLinks {
+  display: flexbox;
+}
+
+.navbarBrand {
+  float: left;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.spanContainer {
+  float: right;
+  border: 1px solid black;
+  font-size: 16px;
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.links {
+  text-decoration: none;
+}
