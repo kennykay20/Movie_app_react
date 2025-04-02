@@ -21,7 +21,7 @@ export default function MovieCard({ movie }) {
         <div className={styles.moviePoster}>
           <img
             className={styles.movieImage}
-            src={`http://localhost:5173/${movie.image}`}
+            src={`http://localhost:5174/${movie.image}`}
             alt={movie.title}
           />
           <div className={styles.movieOverlay}>

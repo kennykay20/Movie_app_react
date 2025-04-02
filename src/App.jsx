@@ -9,6 +9,7 @@ import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import { MovieProvider } from "./contexts/MovieContext";
 import { ApiProvider } from "./contexts/ApiContext";
+import TestLoginForm from "./components/TestLoginForm";
 
 const movieResult = [
   {
@@ -133,7 +134,7 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  <LoginForm
+                  <TestLoginForm
                     isSuccess={isSuccess}
                     setIsSuccess={setIsSuccess}
                     accessToken={accessToken}

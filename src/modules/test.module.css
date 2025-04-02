@@ -77,3 +77,53 @@ make the two columns stack on top of each other instead of next to each other*/
 .moviePoster:hover .favoriteBtn {
   /*background-color: rgba(0, 0, 0, 0.8);*/
 }
+
+/**********************************************/
+
+.container {
+  padding: 40px;
+  color: white;
+}
+
+input {
+  width: 96%;
+  display: block;
+  padding: 12px 20px;
+  margin: 8px 0px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 2px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+.loginBtn {
+  background-color: #04aa6d;
+}
+/* Extra style for the cancel button */
+
+.cancelBtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* center the image and position the close button*/
+.imgContainer {
+  text-align: center;
+}
+.cancelContainer {
+  background-color: #f1f1f1;
+}
