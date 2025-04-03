@@ -30,8 +30,8 @@ const Navbar = ({
       setAccessToken("");
       setRefreshToken("");
       setShowLogin(true);
-      localStorage.setItem("AccessToken", "");
-      localStorage.setItem("RefreshToken", "");
+      localStorage.removeItem("AccessToken", "");
+      localStorage.removeItem("RefreshToken", "");
     } catch (err) {
       alert(`Logout failed. Please try again ${err.message}`);
     }
