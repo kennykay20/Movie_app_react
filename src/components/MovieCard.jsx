@@ -21,7 +21,7 @@ export default function MovieCard({ movie }) {
         <div className={styles.moviePoster}>
           <img
             className={styles.movieImage}
-            src={`http://localhost:5173/${movie.image}`}
+            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={movie.title}
           />
           <div className={styles.movieOverlay}>
@@ -35,7 +35,7 @@ export default function MovieCard({ movie }) {
         </div>
         <div className={styles.movieInfo}>
           <h3>{movie.title}</h3>
-          <p>{movie.releaseDate?.split("-")[0]}</p>
+          <p>{movie.release_date?.split("-")[0]}</p>
         </div>
       </div>
     </div>

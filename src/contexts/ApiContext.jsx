@@ -14,6 +14,8 @@ export const ApiProvider = ({
 }) => {
   const url2 = `http://localhost:5283/api/v1/authentication/access-token`;
   const BASE_URL = "http://localhost:5283/api/v1";
+  const MovieBASE_URL = "https://api.themoviedb.org/3";
+  const MovieAPI_KEY = "113cb52d2b0979318e3b159c6c723fdd";
 
   const fetchWithAuth = async (
     endpoint,
@@ -102,9 +104,39 @@ export const ApiProvider = ({
     }
   };
 
+  const getPopularMovies = async () => {
+    try {
+      const response = await fetch(
+        `${MovieBASE_URL}/movie/popular?api_key=${MovieAPI_KEY}`
+      );
+      const data = await response.json();
+      return response.ok ? data.results : null;
+    } catch (error) {
+      console.log("Error fetching movies: ", error.message);
+      return null;
+    }
+  };
+
+  const searchMovies = async (query) => {
+    try {
+      const response = await fetch(
+        `${MovieBASE_URL}/search/movie?api_key=${MovieAPI_KEY}&query=${encodeURIComponent(
+          query
+        )}`
+      );
+      const data = await response.json();
+      return response.ok ? data.results : null;
+    } catch (error) {
+      console.log("Error fetching movies: ", error.message);
+      return null;
+    }
+  };
+
   const values = {
     fetchWithAuth,
-    fetchWithoutAuth
+    fetchWithoutAuth,
+    getPopularMovies,
+    searchMovies
   };
   return <ApiContext.Provider value={values}>{children}</ApiContext.Provider>;
 };

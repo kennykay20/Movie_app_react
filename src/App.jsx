@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MovieCard from "./components/MovieCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./styles/app.css";
 import RegisterForm from "./components/RegisterForm";
 import Favorites from "./pages/Favorites";
@@ -80,12 +80,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isValue, setIsValue] = useState(true);
 
-  useEffect(() => {
-    async function handleMovieDisplay() {
-      setMovies([...movies, movieResult]);
-    }
-    handleMovieDisplay();
-  }, []);
+  // useEffect(() => {
+  //   async function handleMovieDisplay() {
+  //     setMovies([...movies, movieResult]);
+  //   }
+  //   handleMovieDisplay();
+  // }, []);
 
   const baseUrl = `http://localhost:5283/api/v1`;
 

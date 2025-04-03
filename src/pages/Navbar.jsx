@@ -41,7 +41,7 @@ const Navbar = ({
       <div className={styles.navbarLinks}>
         <div className={styles.navbarBrand}>
           <a href="#" className={styles.links}>
-            🎦 Movie App
+            🎦 Movie
           </a>
         </div>
       </div>

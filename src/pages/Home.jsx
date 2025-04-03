@@ -8,10 +8,6 @@ import { useApiContext } from "../contexts/ApiContext";
 export default function Home({
   accessToken,
   setAccessToken,
-  refreshToken,
-  movieResult,
-  movies,
-  setMovies,
   showLogin,
   setShowLogin,
   error,
@@ -21,24 +17,24 @@ export default function Home({
   setErrorType,
   errorType
 }) {
-  const url = `Users/list`;
-  const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
   let navigate = useNavigate();
-  const { fetchWithAuth } = useApiContext();
+  const { searchMovies, getPopularMovies } = useApiContext();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     if (isLoading) return;
 
     setIsLoading(true);
-
+    alert("search");
     try {
-      const searchMovie = movies.filter((movie) => {
-        return movie.title.trim().toLowerCase() === searchQuery;
-      });
-      setData(searchMovie);
+      // const searchMovie = movies.filter((movie) => {
+      //   return movie.title.trim().toLowerCase() === searchQuery;
+      // });
+      const searchMovie = await searchMovies(searchQuery);
+      console.log(searchMovie);
       setMovies(searchMovie);
       setError("");
     } catch (error) {
@@ -47,12 +43,12 @@ export default function Home({
       setIsLoading(false);
     }
 
-    setSearchQuery("");
+    //setSearchQuery("");
   };
 
   useEffect(() => {
     showLogin ? navigate("/login") : "";
-    const fetchUsers = async () => {
+    const fetchPopularMovies = async () => {
       const localAccessToken = localStorage.getItem("AccessToken");
       try {
         if (localAccessToken) {
@@ -62,49 +58,36 @@ export default function Home({
           navigate("/login");
         }
         if (accessToken) {
-          const resp = await fetchWithAuth(
-            url,
-            accessToken,
-            refreshToken,
-            "GET"
-          );
-          if (!resp.success) {
-            setError("Network response was not ok");
-          } else {
-            setMovies([...movieResult]);
-            setData([...resp.data]);
-            setError("");
-          }
+          const result = await getPopularMovies();
+          setMovies(result);
         }
       } catch (error) {
         if (errorType !== "token") {
           setErrorType("");
-          setError(`Failed to fetch data - ${error.message}`);
+          setError(`Failed to load movies... - ${error.message}`);
         }
       } finally {
         setIsLoading(false);
       }
     };
-    fetchUsers();
+    fetchPopularMovies();
   }, []);
-
-  useEffect(() => {
-    console.log("updated datas: ", data);
-  }, [data]);
 
   return (
     <div>
       <form onSubmit={(e) => handleSearch(e)} className={styles.searchForm}>
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          className={styles.searchInput}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value.trim().toLowerCase())}
-        />
-        <button type="submit" className={styles.searchButton}>
-          Search
-        </button>
+        <div className="flex">
+          <input
+            type="text"
+            placeholder="Search for movies..."
+            className={styles.searchInput}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className={styles.searchButton}>
+            Search
+          </button>
+        </div>
       </form>
 
       {error && <div className={styles.errorMessage}>{error}</div>}

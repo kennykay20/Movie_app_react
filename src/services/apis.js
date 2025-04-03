@@ -1,5 +1,6 @@
 const url2 = `http://localhost:5283/api/v1/authentication/access-token`;
 const BASE_URL = "http://localhost:5283/api/v1";
+
 export const fetchWithAuth = async (
   url,
   token,
