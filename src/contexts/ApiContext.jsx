@@ -14,10 +14,17 @@ export const ApiProvider = ({
 }) => {
   const url2 = `http://localhost:5283/api/v1/authentication/access-token`;
   const BASE_URL = "http://localhost:5283/api/v1";
-  const fetchWithAuth = async (url, token, refreshTokenVal, options = {}) => {
+
+  const fetchWithAuth = async (
+    endpoint,
+    token,
+    refreshTokenVal,
+    methodVal,
+    options = {}
+  ) => {
     try {
-      const response = await fetch(`${BASE_URL}/${url}`, {
-        method: "GET",
+      const response = await fetch(`${BASE_URL}/${endpoint}`, {
+        method: methodVal,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
@@ -29,7 +36,7 @@ export const ApiProvider = ({
         if (result.success) {
           // Retry the request with the new token
           return fetchWithAuth(
-            url,
+            endpoint,
             result.accessToken,
             refreshTokenVal,
             options
@@ -48,6 +55,26 @@ export const ApiProvider = ({
     } catch (error) {
       console.log("Error fetching data: ", error.message);
       return null;
+    }
+  };
+
+  const fetchWithoutAuth = async (endpoint, methodVal, options = {}) => {
+    try {
+      const response = await fetch(`${BASE_URL}/${endpoint}`, {
+        method: methodVal,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        ...options
+      });
+      if (!response.ok) {
+        setError("Error fetching data");
+        throw new Error("Error fetching data");
+      }
+      return response.ok ? await response.json() : null;
+    } catch (error) {
+      setError(`Error fetching data: ${error.message}`);
+      throw new Error(`Error fetching data: ${error.message}`);
     }
   };
 
@@ -76,7 +103,8 @@ export const ApiProvider = ({
   };
 
   const values = {
-    fetchWithAuth
+    fetchWithAuth,
+    fetchWithoutAuth
   };
   return <ApiContext.Provider value={values}>{children}</ApiContext.Provider>;
 };

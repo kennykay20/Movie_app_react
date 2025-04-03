@@ -1,127 +1,17 @@
-.outercontainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
-}
+@import "tailwindcss";
 
-.container {
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-  max-width: 700px;
-  width: 100%;
-  /* background: #fff; */
-  padding: 25px 30px;
-  border-radius: 5px;
-}
-
-.container .title {
-  font-size: 25px;
-  font-weight: 500;
-  position: relative;
-}
-
-.container .title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 30px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-}
-
-.form .emailDetails {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px 0 12px 0;
-}
-
-.form .emailDetails .inputBox {
-  margin-bottom: 15px;
-  width: calc(100% / 2 - 20px);
-}
-
-.emailDetails .inputBox .details {
+.details {
   display: block;
   font-weight: 500;
-  margin-bottom: 5px;
 }
-
-.emailDetails .inputBox input {
-  height: 45px;
-  width: 100%;
-  outline: none;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  padding-left: 15px;
-  font-size: 16px;
-  border-bottom-width: 2px;
-  transition: all 0.3s ease;
-}
-
-.emailDetails .inputBox select {
-  height: 45px;
-  width: 100%;
-  outline: none;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  padding-left: 15px;
-  font-size: 16px;
-}
-
-.form .btnLogin {
-  height: 45px;
-  width: 100%;
-  margin: 45px 0;
-}
-
-.form .btnLogin input {
-  height: 100%;
-  width: 100%;
-  outline: none;
-  color: #fff;
-  border: none;
-  font-size: 18px;
-  font-weight: 500;
-  border-radius: 5px;
-  padding: 10px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-  cursor: pointer;
-}
-
-.form .btnLogin input:hover {
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+#btnToggle {
+  color: rgb(57, 57, 197);
 }
 
 .errorMessage {
-  color: red;
+  color: rgb(195, 47, 47);
 }
 
-.togglePassword {
-  position: absolute;
-  right: 25%;
-  margin-top: -40px;
-  transform: translate(-50%);
+button {
   cursor: pointer;
-  font-weight: bold;
-}
-
-@media screen and (max-width: 1200px) {
-  .togglePassword {
-    position: absolute;
-    right: 15%;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .togglePassword {
-    position: absolute;
-    right: 5%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .togglePassword {
-    position: absolute;
-  }
 }

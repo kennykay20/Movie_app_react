@@ -1,8 +1,12 @@
-import { useState } from "react";
-import login from "../modules/login.module.css";
+import React, { useState } from "react";
+import styles from "../modules/login.module.css";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function LoginForm({
+const LoginForm = ({
+  baseUrl,
   error,
   setError,
   isValue,
@@ -12,12 +16,11 @@ export default function LoginForm({
   setRefreshToken,
   showLogin,
   setShowLogin
-}) {
+}) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [btnValue, setBtnValue] = useState("Login");
   const [showPassword, setShowPassword] = useState(false);
-
-  const url = `http://localhost:5283/api/v1/authentication/login`;
+  // const [icon, setIcon] = useState(eyeOff);
 
   const navigate = useNavigate();
 
@@ -38,8 +41,7 @@ export default function LoginForm({
       return;
     }
     try {
-      console.log(showLogin, " showLogin in login before");
-      const resp = await fetch(`${url}`, {
+      const resp = await fetch(`${baseUrl}/authentication/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -49,9 +51,6 @@ export default function LoginForm({
         setIsValue(!isValue);
         setFormData({ email: "", password: "" });
         alert(`${result.message}`);
-        console.log(result, " result after login successful");
-        //localStorage.clear();
-        console.log(isValue, " isValue");
         if (isValue) {
           setIsSuccess(true);
           setAccessToken(result.accessToken);
@@ -60,7 +59,6 @@ export default function LoginForm({
           localStorage.setItem("RefreshToken", result.refreshToken);
           setShowLogin(!showLogin);
           navigate("/home");
-          console.log(showLogin, " showLogin in login after");
         } else {
           alert(`${result.message}`);
         }
@@ -69,64 +67,118 @@ export default function LoginForm({
         setBtnValue("Login");
       }
     } catch (err) {
-      setError(`Login failed. Please try again ${err.message}`);
+      setError(`Network failed. try again ${err.message}`);
       setBtnValue("Login");
     } finally {
       setBtnValue("Login");
     }
   };
+
+  const handleOAuthLogin = (provider) => {
+    if (provider === "Google") alert(`Logged in with ${provider}`);
+    if (provider === "Facebook") alert(`Logged in with ${provider}`);
+    if (provider === "Twitter") alert(`Logged in with ${provider}`);
+  };
+
+  const handleAuthToggle = () => {
+    setShowLogin(!showLogin);
+    navigate("/register");
+  };
+
   return (
-    <div className={login.outercontainer}>
-      <div className={login.container}>
-        <div className={login.title}>Login</div>
-        <form className={login.form}>
-          <div className={login.emailDetails}>
-            <div className={login.inputBox}>
-              <label htmlFor="emailInput" className={login.details}>
-                Email:
-              </label>
+    <div className="flex-1 bg-gray-200 p-6">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+          <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
+          <form>
+            <label htmlFor="emailInput" className={styles.details}>
+              Email:
+            </label>
+            <div>
               <input
-                name="email"
                 id="emailInput"
+                name="email"
                 type="email"
                 placeholder="Enter your email"
+                className="w-full p-2 mb-3 border-2 rounded"
                 value={formData.email}
                 onChange={(e) => handleEmailChange(e)}
               />
             </div>
-            <div className={login.inputBox}>
-              <label htmlFor="passwordInput" className={login.details}>
-                Password:
-              </label>
+            <label htmlFor="passwordInput" className={styles.details}>
+              Password:
+            </label>
+            <div className="relative">
               <input
-                name="password"
                 id="passwordInput"
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
+                name="password"
+                placeholder="Password"
+                className="w-full p-2 mb-3 border rounded"
+                value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
-                value={formData.password}
               />
               <span
-                className={login.togglePassword}
+                className="absolute right-5 top-3 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? `hide` : `show`}
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </span>
             </div>
-            <div className={login.btnLogin}>
-              <input
-                id="btnSubmit"
-                onClick={(e) => handleSubmit(e)}
+            <div>
+              <button
+                className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
                 type="submit"
-                value={btnValue}
-              />
+              >
+                {btnValue}
+              </button>
             </div>
+            <div className={styles.errorMessage}>{error && <p>{error}</p>}</div>
+          </form>
+
+          <div className="text-center my-3">or</div>
+
+          <div className="flex flex-col space-y-2">
+            <button
+              className="flex items-center justify-center bg-gray-200 text-black p-2 rounded hover:bg-gray-300"
+              onClick={() => handleOAuthLogin("Google")}
+            >
+              <FcGoogle className="mr-2" /> Continue with Google
+            </button>
+            <button
+              className="flex items-center justify-center bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+              onClick={() => handleOAuthLogin("Facebook")}
+            >
+              <FaFacebook className="mr-2" /> Continue with Facebook
+            </button>
+            <button
+              className="flex items-center justify-center bg-blue-400 text-white p-2 rounded hover:bg-blue-500"
+              onClick={() => handleOAuthLogin("Twitter")}
+            >
+              <FaTwitter className="mr-2" /> Continue with Twitter
+            </button>
           </div>
-          <div className={login.errorMessage}>{error && <p>{error}</p>}</div>
-        </form>
+
+          <p className="text-center mt-4">
+            Don't have an account?
+            <a
+              href="#"
+              id={styles.btnToggle}
+              className="ml-1 hover:underline"
+              onClick={handleAuthToggle}
+            >
+              Register
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default LoginForm;

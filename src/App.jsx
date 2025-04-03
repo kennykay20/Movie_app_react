@@ -1,15 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MovieCard from "./components/MovieCard";
-import LoginForm from "./components/LoginForm";
 import { useEffect, useState } from "react";
-import Nav from "./pages/Nav";
 import "./styles/app.css";
 import RegisterForm from "./components/RegisterForm";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import { MovieProvider } from "./contexts/MovieContext";
 import { ApiProvider } from "./contexts/ApiContext";
-import TestLoginForm from "./components/TestLoginForm";
+import LoginForm from "./components/LoginForm";
+import Navbar from "./pages/Navbar";
 
 const movieResult = [
   {
@@ -88,99 +87,124 @@ function App() {
     handleMovieDisplay();
   }, []);
 
+  const baseUrl = `http://localhost:5283/api/v1`;
+
   return (
-    <Router>
-      <MovieProvider>
-        <ApiProvider
-          setShowLogin={setShowLogin}
-          setError={setError}
-          setIsSuccess={setIsSuccess}
-          setErrorType={setErrorType}
-          errorType={errorType}
-        >
-          <Nav
-            showLogin={showLogin}
+    <div className="h-screen flex flex-col">
+      <Router>
+        <MovieProvider>
+          <ApiProvider
             setShowLogin={setShowLogin}
-            isSuccess={isSuccess}
+            setError={setError}
             setIsSuccess={setIsSuccess}
-            setAccessToken={setAccessToken}
-            setRefreshToken={setRefreshToken}
-            isValue={isValue}
-            setIsValue={setIsValue}
-          />
-          <main className="mainContent">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <LoginForm
-                    isSuccess={isSuccess}
-                    setIsSuccess={setIsSuccess}
-                    accessToken={accessToken}
-                    setAccessToken={setAccessToken}
-                    refreshToken={refreshToken}
-                    setRefreshToken={setRefreshToken}
-                    error={error}
-                    setError={setError}
-                    isValue={isValue}
-                    setIsValue={setIsValue}
-                    showLogin={showLogin}
-                    setShowLogin={setShowLogin}
-                    setErrorType={setErrorType}
-                    errorType={errorType}
-                  />
-                }
-              />
-              <Route
-                path="/login"
-                element={
-                  <TestLoginForm
-                    isSuccess={isSuccess}
-                    setIsSuccess={setIsSuccess}
-                    accessToken={accessToken}
-                    setAccessToken={setAccessToken}
-                    refreshToken={refreshToken}
-                    setRefreshToken={setRefreshToken}
-                    error={error}
-                    setError={setError}
-                    isValue={isValue}
-                    setIsValue={setIsValue}
-                    showLogin={showLogin}
-                    setShowLogin={setShowLogin}
-                    setErrorType={setErrorType}
-                    errorType={errorType}
-                  />
-                }
-              />
-              <Route
-                path="/home"
-                element={
-                  <Home
-                    movies={movies}
-                    setMovies={setMovies}
-                    movieResult={movieResult}
-                    accessToken={accessToken}
-                    setAccessToken={setAccessToken}
-                    refreshToken={refreshToken}
-                    showLogin={showLogin}
-                    setShowLogin={setShowLogin}
-                    error={error}
-                    setError={setError}
-                    isLoading={isLoading}
-                    setIsLoading={setIsLoading}
-                    setErrorType={setErrorType}
-                    errorType={errorType}
-                  />
-                }
-              />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/movie" element={<MovieCard />} />
-              <Route path="/favorites" element={<Favorites />} />
-            </Routes>
-          </main>
-        </ApiProvider>
-      </MovieProvider>
-    </Router>
+            setErrorType={setErrorType}
+            errorType={errorType}
+          >
+            <Navbar
+              showLogin={showLogin}
+              setShowLogin={setShowLogin}
+              isSuccess={isSuccess}
+              setIsSuccess={setIsSuccess}
+              setAccessToken={setAccessToken}
+              setRefreshToken={setRefreshToken}
+              isValue={isValue}
+              setIsValue={setIsValue}
+            />
+            <main className="mainContent">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <LoginForm
+                      baseUrl={baseUrl}
+                      isSuccess={isSuccess}
+                      setIsSuccess={setIsSuccess}
+                      accessToken={accessToken}
+                      setAccessToken={setAccessToken}
+                      refreshToken={refreshToken}
+                      setRefreshToken={setRefreshToken}
+                      error={error}
+                      setError={setError}
+                      isValue={isValue}
+                      setIsValue={setIsValue}
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      setErrorType={setErrorType}
+                      errorType={errorType}
+                    />
+                  }
+                />
+                <Route
+                  path="/login"
+                  element={
+                    <LoginForm
+                      baseUrl={baseUrl}
+                      isSuccess={isSuccess}
+                      setIsSuccess={setIsSuccess}
+                      accessToken={accessToken}
+                      setAccessToken={setAccessToken}
+                      refreshToken={refreshToken}
+                      setRefreshToken={setRefreshToken}
+                      error={error}
+                      setError={setError}
+                      isValue={isValue}
+                      setIsValue={setIsValue}
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      setErrorType={setErrorType}
+                      errorType={errorType}
+                    />
+                  }
+                />
+                <Route
+                  path="/home"
+                  element={
+                    <Home
+                      movies={movies}
+                      setMovies={setMovies}
+                      movieResult={movieResult}
+                      accessToken={accessToken}
+                      setAccessToken={setAccessToken}
+                      refreshToken={refreshToken}
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      error={error}
+                      setError={setError}
+                      isLoading={isLoading}
+                      setIsLoading={setIsLoading}
+                      setErrorType={setErrorType}
+                      errorType={errorType}
+                    />
+                  }
+                />
+                <Route
+                  path="/register"
+                  element={
+                    <RegisterForm
+                      baseUrl={baseUrl}
+                      isSuccess={isSuccess}
+                      setIsSuccess={setIsSuccess}
+                      accessToken={accessToken}
+                      setAccessToken={setAccessToken}
+                      refreshToken={refreshToken}
+                      setRefreshToken={setRefreshToken}
+                      error={error}
+                      setError={setError}
+                      isValue={isValue}
+                      setIsValue={setIsValue}
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                    />
+                  }
+                />
+                <Route path="/movie" element={<MovieCard />} />
+                <Route path="/favorites" element={<Favorites />} />
+              </Routes>
+            </main>
+          </ApiProvider>
+        </MovieProvider>
+      </Router>
+    </div>
   );
 }
 

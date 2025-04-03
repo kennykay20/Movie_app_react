@@ -51,6 +51,7 @@ export default function Home({
   };
 
   useEffect(() => {
+    showLogin ? navigate("/login") : "";
     const fetchUsers = async () => {
       const localAccessToken = localStorage.getItem("AccessToken");
       try {
@@ -61,7 +62,12 @@ export default function Home({
           navigate("/login");
         }
         if (accessToken) {
-          const resp = await fetchWithAuth(url, accessToken, refreshToken);
+          const resp = await fetchWithAuth(
+            url,
+            accessToken,
+            refreshToken,
+            "GET"
+          );
           if (!resp.success) {
             setError("Network response was not ok");
           } else {
@@ -80,7 +86,6 @@ export default function Home({
       }
     };
     fetchUsers();
-    showLogin ? navigate("/login") : "";
   }, []);
 
   useEffect(() => {

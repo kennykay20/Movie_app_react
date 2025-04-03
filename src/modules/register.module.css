@@ -1,73 +1,9 @@
-.container {
-  padding: 40px;
-  color: white;
+@import "tailwindcss";
+
+.errorMessage {
+  color: rgb(195, 47, 47);
 }
 
-/* full width input field */
-input {
-  width: 96%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: block;
-  border: none;
-  border-radius: 5px;
-  background: #f1f1f1;
-}
-
-/* Add a background color when the inputs get focus */
-input:focus {
-  background-color: #ddd;
-  outline: none;
-}
-
-/* Set a style for all buttons */
 button {
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 2px;
-  border: none;
   cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-button:hover {
-  opacity: 1;
-}
-
-.signBtn {
-  background-color: #04aa6d;
-}
-/* Extra style for the cancel button */
-
-.cancelBtn {
-  background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelBtn,
-.signBtn {
-  float: left;
-  width: 49%;
-}
-.terms {
-  color: dodgerblue;
-}
-
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-@media screen and (max-width: 300px) {
-  .cancelBtn,
-  .signBtn {
-    width: 100%;
-  }
 }

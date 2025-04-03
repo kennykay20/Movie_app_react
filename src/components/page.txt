@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaTwitter } from "react-icons/fa";
+import { getAuth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "./firebaseConfig"; // Import Firebase config
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+const auth = getAuth(app);
+
+const AuthPage = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleAuthToggle = () => setIsLogin(!isLogin);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (isLogin) {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Logged in:", userCredential.user);
+      } else {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("Registered:", userCredential.user);
+      }
+    } catch (error) {
+      console.error("Auth Error:", error.message);
+    }
+  };
+
+  const handleOAuthLogin = async (provider) => {
+    let providerInstance;
+    if (provider === "Google") providerInstance = new GoogleAuthProvider();
+    if (provider === "Facebook") providerInstance = new FacebookAuthProvider();
+    if (provider === "Twitter") providerInstance = new TwitterAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, providerInstance);
+      console.log(`Logged in with ${provider}:`, result.user);
+    } catch (error) {
+      console.error(`OAuth ${provider} Error:`, error.message);
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 className="text-2xl font-semibold text-center mb-4">
+          {isLogin ? "Login" : "Sign Up"}
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-2 mb-3 border rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full p-2 mb-3 border rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span
+            className="absolute right-3 top-3 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+          </span>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          >
+            {isLogin ? "Login" : "Sign Up"}
+          </button>
+        </form>
+        <div className="text-center my-3">or</div>
+
+        <div className="flex flex-col space-y-2">
+          <button
+            className="flex items-center justify-center bg-gray-200 p-2 rounded hover:bg-gray-300"
+            onClick={() => handleOAuthLogin("Google")}
+          >
+            <FcGoogle className="mr-2" /> Continue with Google
+          </button>
+          <button
+            className="flex items-center justify-center bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            onClick={() => handleOAuthLogin("Facebook")}
+          >
+            <FaFacebook className="mr-2" /> Continue with Facebook
+          </button>
+          <button
+            className="flex items-center justify-center bg-blue-400 text-white p-2 rounded hover:bg-blue-500"
+            onClick={() => handleOAuthLogin("Twitter")}
+          >
+            <FaTwitter className="mr-2" /> Continue with Twitter
+          </button>
+        </div>
+        
+        <p className="text-center mt-4">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
+          <button
+            className="text-blue-600 ml-1 hover:underline"
+            onClick={handleAuthToggle}
+          >
+            {isLogin ? "Sign Up" : "Login"}
+          </button>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default AuthPage;
