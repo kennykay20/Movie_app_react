@@ -100,7 +100,7 @@ const LoginForm = ({
                 name="email"
                 type="email"
                 placeholder="Enter your email"
-                className="w-full p-2 mb-3 border-2 rounded"
+                className="w-full p-2 mb-3 border rounded"
                 value={formData.email}
                 onChange={(e) => handleEmailChange(e)}
               />
