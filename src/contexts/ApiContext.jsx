@@ -10,10 +10,11 @@ export const ApiProvider = ({
   setShowLogin,
   setError,
   setIsSuccess,
-  setErrorType
+  setErrorType,
+  baseUrl
 }) => {
-  const url2 = `http://localhost:5283/api/v1/authentication/access-token`;
-  const BASE_URL = "http://localhost:5283/api/v1";
+  const url2 = `${baseUrl}/authentication/access-token`;
+  const BASE_URL = `${baseUrl}`;
   const MovieBASE_URL = "https://api.themoviedb.org/3";
   const MovieAPI_KEY = "113cb52d2b0979318e3b159c6c723fdd";
 

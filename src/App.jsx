@@ -87,7 +87,7 @@ function App() {
   //   handleMovieDisplay();
   // }, []);
 
-  const baseUrl = `http://localhost:5283/api/v1`;
+  const baseUrl = `http://localhost:5284/api/v1`;
 
   return (
     <div className="h-screen flex flex-col">
@@ -99,6 +99,7 @@ function App() {
             setIsSuccess={setIsSuccess}
             setErrorType={setErrorType}
             errorType={errorType}
+            baseUrl={baseUrl}
           >
             <Navbar
               showLogin={showLogin}
